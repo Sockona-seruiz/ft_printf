@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/04 17:14:09 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/09 19:30:30 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/10 19:06:20 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,7 +33,7 @@ int		ft_intlen(long int n)
 	return (i);
 }
 
-int		ft_print_space_int(t_list *t_struct, int len)
+int		ft_print_space_int(t_list *t_struct, int len, char *result)
 {
 	int		i;
 	int		width;
@@ -41,9 +41,11 @@ int		ft_print_space_int(t_list *t_struct, int len)
 
 	c = ' ';
 	width = t_struct->width;
-	if (t_struct->prec == 0 && width < len)
+	if (t_struct->prec == 0 && t_struct->flag == '0')
 		c = '0';
 	i = 0;
+	if (result[0] == '-' && len == t_struct->prec)
+		width--;
 	while (width > t_struct->prec && width > len)
 	{
 		i++;
@@ -75,7 +77,7 @@ int		ft_launch_fct_int(t_list *t_struct, int len, char *result)
 
 	i = 0;
 	if (t_struct->flag != '-')
-		i = ft_print_space_int(t_struct, len);
+		i = ft_print_space_int(t_struct, len, result);
 	i = i + ft_print_int(result, t_struct);
 	if (t_struct->flag == '-')
 		i = i + ft_print_space_int_back(t_struct, i);
@@ -88,7 +90,6 @@ int		ft_itoa(long int n, t_list *t_struct)
 	char *result;
 	int len;
 
-	//printf("Number : %d\n width : %d\nprec : %d\nflag : %c\n", n, t_struct->width, t_struct->prec, t_struct->flag);
 	len = ft_intlen(n);
 	if ((result = malloc(sizeof(char) * (len + 1))) == 0)
 		return (0);

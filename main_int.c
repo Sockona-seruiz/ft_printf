@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/09 17:55:48 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/09 19:11:27 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/10 09:39:54 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -102,7 +102,7 @@ int main()
 	printf("\n\n");
 	printf("\n\n\nMATTER\n\n");
 	printf("%%d avec 10 de prec : |%.10d|", 1254);
-	ft_printf("\n");
+	printf("\n");
 	ft_printf("%%d avec 10 de prec : |%.10d|", 1254);
 	printf("\n\n");
 	printf("%%d avec 2 de prec 20 de width : |%20.2d|", 1254);

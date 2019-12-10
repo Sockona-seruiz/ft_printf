@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/02 11:06:38 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/09 19:31:11 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/10 18:58:12 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,13 +68,22 @@ char	*ft_fill_res(char *str, char *result, int prec)
 	return (result);
 }
 */
-int		ft_print_int(char *str, t_list *t_struct)
-{
-	int		result;
-	int		len;
-	int		prec;
 
-	len = ft_strlen(str);
+int		ft_same_prec_len(char *str, t_list *t_struct, int len)
+{
+	if (str[0] == '-')
+		write(1, "-", 1);
+	write(1, "0", 1);
+	str++;
+	write(1, str, len);
+	return (len + 1);
+}
+
+int		ft_diff_prec_len(char *str, t_list *t_struct, int len)
+{
+	int prec;
+	int result;
+
 	prec = t_struct->prec;
 	if (prec == 0 || prec < len)
 		prec = len;
@@ -96,6 +105,21 @@ int		ft_print_int(char *str, t_list *t_struct)
 	return (result);
 }
 
+int		ft_print_int(char *str, t_list *t_struct)
+{
+	int		result;
+	int		len;
+	int		prec;
+
+	if (str[0] == '-' && len == t_struct->prec)
+		str++;
+	len = ft_strlen(str);
+	prec = t_struct->prec;
+	if (prec == len)
+		return (ft_same_prec_len(str, t_struct, len));
+	return (ft_diff_prec_len(str, t_struct, len));
+}
+
 void	ft_print_front(char *str, int width)
 {
 	int		len;
@@ -109,7 +133,7 @@ void	ft_print_front(char *str, int width)
 		width--;
 	}
 }
-
+/*
 int		ft_print_str(char *str, t_list *t_struct)
 {
 	int		i;
@@ -126,12 +150,10 @@ int		ft_print_str(char *str, t_list *t_struct)
 		//printf("Wesh");
 
 	free(splt_str);
-	/*
 	i = ft_strlen(str);
 	write(1, str, i);
-	*/
 	return (i);
-}
+}*/
 
 int		ft_launch_fct(char c, va_list *arg_list, t_list *t_struct)
 {
@@ -142,8 +164,10 @@ int		ft_launch_fct(char c, va_list *arg_list, t_list *t_struct)
 		return (ft_print_str(va_arg(*arg_list, char *), t_struct));
 	else if (c == 'c')
 		return (ft_print_char(arg_list));
-	else if (c == 'd' || c == 'u')
+	else if (c == 'd')
 		return (ft_itoa(va_arg(*arg_list, int), t_struct));
+	else if (c == 'u')
+		return (ft_itoa(va_arg(*arg_list, unsigned int), t_struct));
 	return (-1);
 }
 
@@ -180,6 +204,11 @@ int		ft_fill_struct(t_list *t_struct, const char *str, va_list *arg_list)
 	{
 		i++;
 		t_struct->width = va_arg(*arg_list, int);
+		if (t_struct->width < 0)
+		{
+			t_struct->width = t_struct->width * -1;
+			t_struct->flag = '-';
+		}
 	}
 	i = i + j;
 	j = 0;
@@ -247,5 +276,5 @@ int		ft_printf(const char *str, ...)
 	}
 	free(t_struct);
 	//printf("printf result : %d\n", res);
-	return (i);
+	return (res);
 }
