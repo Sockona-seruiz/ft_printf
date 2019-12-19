@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/02 11:06:38 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/19 10:24:09 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/19 13:39:23 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,9 +19,9 @@ int		ft_launch_fct(char c, va_list *arg_list, t_list *t_struct)
 		return (ft_print_str(va_arg(*arg_list, char *), t_struct));
 	else if (c == 'c')
 		return (ft_launch_char(arg_list, t_struct));
-	else if (c == 'd')
+	else if (c == 'd' || c == 'i')
 		return (ft_itoa_base(va_arg(*arg_list, int), "0123456789", t_struct));
-	else if (c == 'u' || c == 'i')
+	else if (c == 'u')
 		return (ft_itoa_base(va_arg(*arg_list, long int),
 				"0123456789", t_struct));
 	else if (c == '%')
