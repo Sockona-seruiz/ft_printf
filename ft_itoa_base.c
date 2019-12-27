@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/16 12:27:12 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/19 11:17:58 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 12:30:19 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,11 +37,8 @@ void	ft_flag_after(t_list *t_struct, int len, int prec, char *str)
 		t_struct->res += write(1, " ", 1);
 	else
 		t_struct->res += write(1, str, len);
-	while (res > 0)
-	{
+	while (res-- > 0)
 		t_struct->res += write(1, " ", 1);
-		res--;
-	}
 }
 
 void	ft_prec(t_list *t_struct, int len)

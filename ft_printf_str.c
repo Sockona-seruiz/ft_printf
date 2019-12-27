@@ -6,22 +6,12 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/10 15:19:19 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/27 12:20:37 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 12:26:41 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-size_t	ft_strlen(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 
 int		ft_flag_str(t_list *t_struct, int len)
 {
@@ -42,6 +32,22 @@ int		ft_flag_str(t_list *t_struct, int len)
 	return (i);
 }
 
+int		ft_neg_prec(t_list *t_struct)
+{
+	if (t_struct->spec == '%')
+		t_struct->width--;
+	if (t_struct->spec == '%' && t_struct->flag == '-')
+		t_struct->res += write(1, "%", 1);
+	while (t_struct->width > 0)
+	{
+		t_struct->width--;
+		t_struct->res += write(1, " ", 1);
+	}
+	if (t_struct->spec == '%' && t_struct->flag != '-')
+		t_struct->res += write(1, "%", 1);
+	return (1);
+}
+
 int		ft_print_str(char *str, t_list *t_struct)
 {
 	int	len;
@@ -53,20 +59,7 @@ int		ft_print_str(char *str, t_list *t_struct)
 	if (t_struct->prec == 0 || t_struct->prec == -2)
 		t_struct->prec = len;
 	else if (t_struct->prec == -1)
-	{
-		if (t_struct->spec == '%')
-			t_struct->width--;
-		if (t_struct->spec == '%' && t_struct->flag == '-')
-			t_struct->res += write(1, "%", 1);
-		while (t_struct->width > 0)
-		{
-			t_struct->width--;
-			t_struct->res += write(1, " ", 1);
-		}
-		if (t_struct->spec == '%' && t_struct->flag != '-')
-			t_struct->res += write(1, "%", 1);
-		return (1);
-	}
+		return (ft_neg_prec(t_struct));
 	if (t_struct->flag != '-')
 		result = ft_flag_str(t_struct, len);
 	if (t_struct->prec > 0 && t_struct->prec < len)
