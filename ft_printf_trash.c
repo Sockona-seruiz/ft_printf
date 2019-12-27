@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:33:31 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/27 10:51:37 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 11:18:35 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -120,8 +120,10 @@ int		ft_fill_struct(t_list *t_struct, const char *str, va_list *arg_list)
 	int i;
 
 	i = 0;
+	if (str[i] == '-' || str[i] == '0')
+		t_struct->flag = str[i];
 	while (str[i] == '-' || str[i] == '0')
-		t_struct->flag = str[i++];
+		i++;
 	if (str[i] != '*' && (t_struct->width = ft_atoi(&str[i])) >= 0)
 		while (48 <= str[i] && str[i] <= 57)
 			i++;

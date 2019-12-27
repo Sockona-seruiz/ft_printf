@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/10 15:19:19 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/27 10:51:57 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 11:46:22 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,8 @@ int		ft_flag_str(t_list *t_struct, int len)
 		c = '0';
 	if (t_struct->prec != 0 && t_struct->prec < len)
 		len = t_struct->prec;
-	while (i < (t_struct->width - len))
+	//printf("\n%d\n", t_struct->width - len);
+	while (i < (t_struct->width - len) && t_struct->prec != -1)
 	{
 		t_struct->res += write(1, &c, 1);
 		i++;
@@ -63,7 +64,7 @@ int		ft_print_str(char *str, t_list *t_struct)
 	}
 	if (t_struct->flag != '-')
 		result = ft_flag_str(t_struct, len);
-	if (t_struct->prec != 0 && t_struct->prec < len)
+	if (t_struct->prec > 0 && t_struct->prec < len)
 	{
 		t_struct->res += write(1, str, t_struct->prec);
 		if (t_struct->flag == '-')
