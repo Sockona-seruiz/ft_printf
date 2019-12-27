@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:33:31 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/27 12:57:26 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 13:22:21 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,7 +28,7 @@ int		ft_itoa_base_p(unsigned long int number, char *base, t_list *t_struct)
 	len = ft_strlen(base);
 	buff = number;
 	count = 1;
-	while (buff > len - 1)
+	while (buff > (unsigned long int)(len - 1))
 	{
 		buff = buff / len;
 		count++;
@@ -114,7 +114,6 @@ int		ft_fill_prec(t_list *t_struct, const char *s,
 
 int		ft_fill_struct(t_list *t_struct, const char *str, va_list *arg_list)
 {
-	int			i;
 	t_listint	lst;
 
 	lst.btn = 0;

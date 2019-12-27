@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/02 11:06:38 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/27 12:37:36 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 13:20:14 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,7 +54,6 @@ int		ft_atoi(const char *str)
 {
 	int		i;
 	int		result;
-	char	spec;
 
 	result = 0;
 	i = 0;
@@ -117,5 +116,6 @@ int		ft_printf(const char *str, ...)
 		return (-1);
 	}
 	free(t_struct);
+	va_end(arg_list);
 	return (res);
 }
