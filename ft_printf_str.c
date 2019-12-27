@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/10 15:19:19 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/27 11:46:22 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 12:20:37 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,8 +34,7 @@ int		ft_flag_str(t_list *t_struct, int len)
 		c = '0';
 	if (t_struct->prec != 0 && t_struct->prec < len)
 		len = t_struct->prec;
-	//printf("\n%d\n", t_struct->width - len);
-	while (i < (t_struct->width - len) && t_struct->prec != -1)
+	while (i < (t_struct->width - len))
 	{
 		t_struct->res += write(1, &c, 1);
 		i++;
@@ -53,13 +52,19 @@ int		ft_print_str(char *str, t_list *t_struct)
 	len = ft_strlen(str);
 	if (t_struct->prec == 0 || t_struct->prec == -2)
 		t_struct->prec = len;
-	else if (t_struct->prec == -1 && t_struct->spec == 's')
+	else if (t_struct->prec == -1)
 	{
+		if (t_struct->spec == '%')
+			t_struct->width--;
+		if (t_struct->spec == '%' && t_struct->flag == '-')
+			t_struct->res += write(1, "%", 1);
 		while (t_struct->width > 0)
 		{
 			t_struct->width--;
 			t_struct->res += write(1, " ", 1);
 		}
+		if (t_struct->spec == '%' && t_struct->flag != '-')
+			t_struct->res += write(1, "%", 1);
 		return (1);
 	}
 	if (t_struct->flag != '-')

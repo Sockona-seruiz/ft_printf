@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:33:31 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/27 11:18:35 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 12:20:12 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -103,7 +103,7 @@ int		ft_fill_prec(t_list *t_struct, const char *str,
 		{
 			i++;
 			t_struct->prec = va_arg(*arg_list, int);
-			if (t_struct->prec < 0 && str[i] == 's')
+			if (t_struct->prec < 0 && str[i] == 's' || str[i] == '%')
 				t_struct->prec = -2;
 		}
 		else
