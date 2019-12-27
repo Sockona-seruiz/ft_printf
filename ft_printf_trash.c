@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:33:31 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/20 14:35:30 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 10:51:37 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -93,7 +93,7 @@ int		ft_fill_prec(t_list *t_struct, const char *str,
 	{
 		btn = 1;
 		i++;
-		if (str[i] != '*')// && (t_struct->prec = ft_atoi(&str[i])) >= 0)
+		if (str[i] != '*')
 		{
 			t_struct->prec = ft_atoi(&str[i]);
 			while (48 <= str[i] && str[i] <= 57)
@@ -104,15 +104,13 @@ int		ft_fill_prec(t_list *t_struct, const char *str,
 			i++;
 			t_struct->prec = va_arg(*arg_list, int);
 			if (t_struct->prec < 0 && str[i] == 's')
-				t_struct->prec = 0;
+				t_struct->prec = -2;
 		}
 		else
 			t_struct->prec = -1;
 	}
 	t_struct->spec = str[i];
-	if (btn == 1 && t_struct->prec == 0 &&
-			(str[i] == 'd' || str[i] == 'u' || str[i] == 'x'
-			|| str[i] == 'X' || str[i] == 'i' || str[i] == 'p'))
+	if (btn == 1 && t_struct->prec == 0)
 		t_struct->prec = -1;
 	return (i);
 }

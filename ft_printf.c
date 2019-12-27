@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/02 11:06:38 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/27 10:23:20 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 10:57:30 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -97,6 +97,7 @@ int		ft_printf_2(t_list *t_struct, const char *str, va_list *arg_list)
 		else if (str[i] != '%')
 			t_struct->res += write(1, &str[i], 1);
 		t_struct->prec = 0;
+		t_struct->isneg = 0;
 		i++;
 	}
 	return (t_struct->res);
