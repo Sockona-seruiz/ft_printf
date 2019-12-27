@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/03 15:38:16 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/20 13:12:47 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 12:56:54 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,6 +25,11 @@ typedef struct	s_list
 	int			res;
 	int			isneg;
 }				t_list;
+typedef struct	s_listint
+{
+	int			i;
+	int			btn;
+}				t_listint;
 int				ft_printf(const char *str,
 				...) __attribute__((format(printf,1,2)));
 size_t			ft_strlen(char *str);
@@ -33,7 +38,7 @@ int				ft_launch_perc(t_list *t_struct);
 int				ft_atoi(const char *str);
 void			*ft_calloc(size_t count, size_t size);
 void			ft_clean_struct(t_list *t_struct);
-int				ft_fill_prec(t_list *t_struct, const char *str, va_list *arg_list, int i);
+int				ft_fill_prec(t_list *t_struct, const char *s, va_list *arg_list, t_listint *lst);
 int				ft_fill_struct(t_list *t_struct, const char *str, va_list *arg_list);
 int				ft_print_int(char *str, t_list *t_struct, int i);
 int				ft_print_str(char *str, t_list *t_struct);

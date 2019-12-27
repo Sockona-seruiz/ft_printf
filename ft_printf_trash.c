@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:33:31 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/27 12:44:29 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 12:57:26 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,53 +83,52 @@ void	*ft_calloc(size_t count, size_t size)
 	return ((void *)mem_calloc);
 }
 
-int		ft_fill_prec(t_list *t_struct, const char *str,
-		va_list *arg_list, int i)
+int		ft_fill_prec(t_list *t_struct, const char *s,
+		va_list *arg_list, t_listint *lst)
 {
-	int btn;
-
-	btn = 0;
-	if (str[i] == '.')
+	if (s[lst->i] == '.')
 	{
-		btn = 1;
-		i++;
-		if (str[i] != '*')
+		lst->btn = 1;
+		lst->i++;
+		if (s[lst->i] != '*')
 		{
-			t_struct->prec = ft_atoi(&str[i]);
-			while (48 <= str[i] && str[i] <= 57)
-				i++;
+			t_struct->prec = ft_atoi(&s[lst->i]);
+			while (48 <= s[lst->i] && s[lst->i] <= 57)
+				lst->i++;
 		}
-		else if (str[i] == '*')
+		else if (s[lst->i] == '*')
 		{
-			i++;
+			lst->i++;
 			t_struct->prec = va_arg(*arg_list, int);
-			if (t_struct->prec < 0 && (str[i] == 's' || str[i] == '%'))
+			if (t_struct->prec < 0 && (s[lst->i] == 's' || s[lst->i] == '%'))
 				t_struct->prec = -2;
 		}
 		else
 			t_struct->prec = -1;
 	}
-	t_struct->spec = str[i];
-	if (btn == 1 && t_struct->prec == 0)
+	t_struct->spec = s[lst->i];
+	if (lst->btn == 1 && t_struct->prec == 0)
 		t_struct->prec = -1;
-	return (i);
+	return (lst->i);
 }
 
 int		ft_fill_struct(t_list *t_struct, const char *str, va_list *arg_list)
 {
-	int i;
+	int			i;
+	t_listint	lst;
 
-	i = 0;
-	if (str[i] == '-' || str[i] == '0')
-		t_struct->flag = str[i];
-	while (str[i] == '-' || str[i] == '0')
-		i++;
-	if (str[i] != '*' && (t_struct->width = ft_atoi(&str[i])) >= 0)
-		while (48 <= str[i] && str[i] <= 57)
-			i++;
-	else if (str[i] == '*')
+	lst.btn = 0;
+	lst.i = 0;
+	if (str[lst.i] == '-' || str[lst.i] == '0')
+		t_struct->flag = str[lst.i];
+	while (str[lst.i] == '-' || str[lst.i] == '0')
+		lst.i++;
+	if (str[lst.i] != '*' && (t_struct->width = ft_atoi(&str[lst.i])) >= 0)
+		while (48 <= str[lst.i] && str[lst.i] <= 57)
+			lst.i++;
+	else if (str[lst.i] == '*')
 	{
-		i++;
+		lst.i++;
 		t_struct->width = va_arg(*arg_list, int);
 		if (t_struct->width < 0)
 		{
@@ -137,5 +136,5 @@ int		ft_fill_struct(t_list *t_struct, const char *str, va_list *arg_list)
 			t_struct->flag = '-';
 		}
 	}
-	return (ft_fill_prec(t_struct, str, arg_list, i));
+	return (ft_fill_prec(t_struct, str, arg_list, &lst));
 }
