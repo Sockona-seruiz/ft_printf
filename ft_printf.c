@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/02 11:06:38 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/19 13:39:23 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/27 10:23:20 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,17 +44,34 @@ int		ft_atoi(const char *str)
 {
 	int i;
 	int result;
-	int sign;
+	char spec;
 
-	sign = 1;
 	result = 0;
 	i = 0;
+	if (47 <= str[i] && str[i] <= 57)
+		while (47 <= str[i] && str[i] <= 57)
+			i++;
+	else if (str[i] == '*')
+		i++;
+	spec = str[i];
+	i = 0;
+	if (48 > str[i] && str[i] > 57 && spec == 's')
+		return (-1);
+	if (str[i] == '0' && spec == 's')
+	{
+		while (str[i] == '0')
+			i++;
+		if (48 > str[i] && str[i] > 57)
+			return (-1);
+	}
+	if (str[i] == '-')
+		return (-1);
 	while (48 <= str[i] && str[i] <= 57)
 	{
 		result = (str[i] - 48) + (result * 10);
 		i++;
 	}
-	return (result * sign);
+	return (result);
 }
 
 int		ft_printf_2(t_list *t_struct, const char *str, va_list *arg_list)
@@ -79,6 +96,7 @@ int		ft_printf_2(t_list *t_struct, const char *str, va_list *arg_list)
 		}
 		else if (str[i] != '%')
 			t_struct->res += write(1, &str[i], 1);
+		t_struct->prec = 0;
 		i++;
 	}
 	return (t_struct->res);
