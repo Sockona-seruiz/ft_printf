@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/16 12:27:12 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/27 12:30:19 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/30 11:04:41 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -99,6 +99,7 @@ void	ft_launch_fct_int(char *number, t_list *t_struct, int len)
 		else
 			t_struct->res += write(1, number, len);
 	}
+	free(number);
 }
 
 char	*calcul_base(unsigned long int number, char *base, int len, int count)
