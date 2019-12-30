@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/02 11:06:38 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/27 13:20:14 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/30 10:46:24 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ size_t	ft_strlen(char *str)
 int		ft_launch_fct(char c, va_list *arg_list, t_list *t_struct)
 {
 	if (c == 's')
-		return (ft_print_str(va_arg(*arg_list, char *), t_struct));
+		return (ft_print_str(va_arg(*arg_list, char *), t_struct, -1));
 	else if (c == 'c')
 		return (ft_launch_char(arg_list, t_struct));
 	else if (c == 'd' || c == 'i')
