@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/02 11:06:38 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/30 10:46:24 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/31 10:14:13 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,24 +27,22 @@ int		ft_launch_fct(char c, va_list *arg_list, t_list *t_struct)
 {
 	if (c == 's')
 		return (ft_print_str(va_arg(*arg_list, char *), t_struct, -1));
-	else if (c == 'c')
+	else if (c == 'c' || c == '%')
 		return (ft_launch_char(arg_list, t_struct));
 	else if (c == 'd' || c == 'i')
-		return (ft_itoa_base(va_arg(*arg_list, int), "0123456789", t_struct));
+		return (ft_print_base(va_arg(*arg_list, int), "0123456789", t_struct));
 	else if (c == 'u')
-		return (ft_itoa_base(va_arg(*arg_list, long int),
+		return (ft_print_base(va_arg(*arg_list, long int),
 				"0123456789", t_struct));
-	else if (c == '%')
-		return (ft_launch_perc(t_struct));
 	else if (c == 'x')
-		return (ft_itoa_base(va_arg(*arg_list, long int),
+		return (ft_print_base(va_arg(*arg_list, long int),
 				"0123456789abcdef", t_struct));
 	else if (c == 'p')
-		return (ft_itoa_base_p(va_arg(*arg_list, unsigned long int),
+		return (ft_print_base_p(va_arg(*arg_list, unsigned long int),
 				"0123456789abcdef", t_struct));
 	else if (c == 'X')
 	{
-		return (ft_itoa_base(va_arg(*arg_list, long int),
+		return (ft_print_base(va_arg(*arg_list, long int),
 				"0123456789ABCDEF", t_struct));
 	}
 	return (-1);
@@ -100,22 +98,12 @@ int		ft_printf_2(t_list *t_struct, const char *str, va_list *arg_list)
 int		ft_printf(const char *str, ...)
 {
 	va_list		arg_list;
-	t_list		*t_struct;
-	int			i;
+	t_list		t_struct;
 	int			res;
 
-	if ((t_struct = ft_calloc(sizeof(t_list), 1)) == 0)
-		return (-1);
-	t_struct->res = 0;
-	res = 0;
-	i = 0;
+	t_struct.res = 0;
 	va_start(arg_list, str);
-	if ((res = ft_printf_2(t_struct, str, &arg_list)) == -1)
-	{
-		free(t_struct);
-		return (-1);
-	}
-	free(t_struct);
+	res = ft_printf_2(&t_struct, str, &arg_list);
 	va_end(arg_list);
 	return (res);
 }

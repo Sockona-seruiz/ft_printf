@@ -6,30 +6,19 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/18 16:33:31 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/30 11:13:03 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/31 13:25:07 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	*ft_calloc(size_t count, size_t size)
-{
-	char			*mem_calloc;
-	unsigned int	i;
+/*
+** (. || .0) => prec = -1
+** prec < 0  => prec = -2
+*/
 
-	i = 0;
-	if ((mem_calloc = malloc(count * size)) == 0)
-		return (0);
-	while (i < (count * size))
-	{
-		mem_calloc[i] = 0;
-		i++;
-	}
-	return ((void *)mem_calloc);
-}
-
-int		ft_itoa_base_p(unsigned long int number, char *base, t_list *t_struct)
+int		ft_print_base_p(unsigned long int number, char *base, t_list *t_struct)
 {
 	int					len;
 	int					count;
@@ -55,7 +44,7 @@ int		ft_itoa_base_p(unsigned long int number, char *base, t_list *t_struct)
 	return (1);
 }
 
-int		ft_itoa_base(long number, char *base, t_list *t_struct)
+int		ft_print_base(long number, char *base, t_list *t_struct)
 {
 	int		len;
 	int		count;
@@ -67,7 +56,8 @@ int		ft_itoa_base(long number, char *base, t_list *t_struct)
 		t_struct->isneg = 1;
 		number = number * -1;
 	}
-	if (number == 0 && t_struct->prec == -1 && t_struct->width == 0)
+	if (number == 0 && t_struct->prec == -1 &&
+		t_struct->width == 0 && t_struct->prec != -2)
 		return (1);
 	len = ft_strlen(base);
 	buff = number;
@@ -100,11 +90,9 @@ int		ft_fill_prec(t_list *t_struct, const char *s,
 		{
 			lst->i++;
 			t_struct->prec = va_arg(*arg_list, int);
-			if (t_struct->prec < 0 && (s[lst->i] == 's' || s[lst->i] == '%'))
+			if (t_struct->prec < 0)
 				t_struct->prec = -2;
 		}
-		else
-			t_struct->prec = -1;
 	}
 	t_struct->spec = s[lst->i];
 	if (lst->btn == 1 && t_struct->prec == 0)

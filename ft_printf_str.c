@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/10 15:19:19 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/30 10:52:30 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/30 15:43:01 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,19 +77,6 @@ int		ft_print_str(char *str, t_list *t_struct, int len)
 	return (1);
 }
 
-int		ft_launch_perc(t_list *t_struct)
-{
-	char *str;
-
-	if ((str = malloc(sizeof(char) * 2)) == 0)
-		return (-1);
-	str[1] = '\0';
-	str[0] = '%';
-	ft_print_str(str, t_struct, 1);
-	free(str);
-	return (1);
-}
-
 int		ft_launch_char(va_list *arg_list, t_list *t_struct)
 {
 	char *str;
@@ -97,7 +84,10 @@ int		ft_launch_char(va_list *arg_list, t_list *t_struct)
 	if ((str = malloc(sizeof(char) * 2)) == 0)
 		return (-1);
 	str[1] = '\0';
-	str[0] = (char)va_arg(*arg_list, int);
+	if (t_struct->spec == 'c')
+		str[0] = (char)va_arg(*arg_list, int);
+	else
+		str[0] = '%';
 	ft_print_str(str, t_struct, 1);
 	free(str);
 	return (1);

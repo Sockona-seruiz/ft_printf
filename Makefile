@@ -6,7 +6,7 @@
 #    By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2019/12/27 13:16:22 by seruiz       #+#   ##    ##    #+#        #
-#    Updated: 2019/12/30 11:14:02 by seruiz      ###    #+. /#+    ###.fr      #
+#    Updated: 2019/12/31 13:38:59 by seruiz      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -22,7 +22,7 @@ LIB = ft_printf.h
 SRC = ft_printf.c\
 	  ft_printf_str.c\
 	  ft_prec_width_itoa.c\
-	  ft_itoa_base.c
+	  ft_print_base.c
 
 OBJ = $(SRC:%.c=%.o)
 

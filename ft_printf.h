@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/03 15:38:16 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/30 10:47:01 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/12/31 10:12:35 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,10 +37,7 @@ int				ft_printf(const char *str,
 				...) __attribute__((format(printf,1,2)));
 size_t			ft_strlen(char *str);
 int				ft_launch_char(va_list *arg_list, t_list *t_struct);
-int				ft_launch_perc(t_list *t_struct);
 int				ft_atoi(const char *str);
-void			*ft_calloc(size_t count, size_t size);
-void			ft_clean_struct(t_list *t_struct);
 int				ft_fill_prec(t_list *t_struct, const char *s,
 				va_list *arg_list, t_listint *lst);
 int				ft_fill_struct(t_list *t_struct, const char *str,
@@ -51,7 +48,7 @@ int				ft_itoa(long int n, t_list *t_struct);
 char			*calcul_base(unsigned long int number, char *base,
 				int len, int count);
 void			ft_launch_fct_int(char *number, t_list *t_struct, int len);
-int				ft_itoa_base(long number, char *base, t_list *t_struct);
-int				ft_itoa_base_p(unsigned long int number, char *base,
+int				ft_print_base(long number, char *base, t_list *t_struct);
+int				ft_print_base_p(unsigned long int number, char *base,
 				t_list *t_struct);
 #endif
