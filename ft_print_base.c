@@ -1,19 +1,43 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_itoa_base.c                                   .::    .:/ .      .::   */
+/*   ft_print_base.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/12/16 12:27:12 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2019/12/31 13:38:32 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Created: 2020/01/02 14:46:06 by seruiz       #+#   ##    ##    #+#       */
+/*   Updated: 2020/01/02 14:47:49 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_flag_after(t_list *t_struct, int len, int prec, char *str)
+int		ft_print_flag(t_list *t_struct, int len, char flag, char *number)
+{
+	char	*str;
+	int		i;
+
+	i = 0;
+	if (len < 0)
+		return (1);
+	if ((str = malloc(sizeof(char) * (len + 1))) == NULL)
+	{
+		free(number);
+		return (-1);
+	}
+	str[len] = '\0';
+	while (i < len)
+	{
+		str[i] = flag;
+		i++;
+	}
+	t_struct->res += write(1, str, len);
+	free(str);
+	return (1);
+}
+
+int		ft_flag_after(t_list *t_struct, int len, int prec, char *str)
 {
 	int res;
 
@@ -37,58 +61,58 @@ void	ft_flag_after(t_list *t_struct, int len, int prec, char *str)
 		t_struct->res += write(1, " ", 1);
 	else
 		t_struct->res += write(1, str, len);
-	while (res-- > 0)
-		t_struct->res += write(1, " ", 1);
+	return (ft_print_flag(t_struct, res, ' ', str));
 }
 
-void	ft_prec(t_list *t_struct, int len)
+int		ft_prec(t_list *t_struct, int len, char *number)
 {
+	int prec;
+
+	prec = t_struct->prec;
 	if (t_struct->isneg == 1)
 	{
 		t_struct->res += write(1, "-", 1);
 		t_struct->isneg = -1;
 	}
-	while (t_struct->prec > len)
-	{
-		t_struct->res += write(1, "0", 1);
-		t_struct->prec--;
-	}
 	t_struct->prec = 0;
+	return (ft_print_flag(t_struct, prec - len, '0', number));
 }
 
-void	ft_flag_before(t_list *t_struct, int len)
+int		ft_flag_before(t_list *t_struct, int len, char *number)
 {
 	if (t_struct->prec == 0 && t_struct->flag == '0')
 	{
 		t_struct->prec = t_struct->width;
 		if (t_struct->isneg == 1)
 			t_struct->prec--;
-		ft_prec(t_struct, len);
-		return ;
+		return (ft_prec(t_struct, len, number));
 	}
 	if (t_struct->isneg == 1)
 		t_struct->width--;
 	if (t_struct->spec == 'p')
 		t_struct->width = t_struct->width - 2;
-	while (t_struct->width > len && t_struct->width > t_struct->prec)
-	{
-		t_struct->res += write(1, " ", 1);
-		t_struct->width--;
-	}
+	if (len > t_struct->prec)
+		return (ft_print_flag(t_struct, t_struct->width - len, ' ', number));
+	else
+		return (ft_print_flag(t_struct,
+					t_struct->width - t_struct->prec, ' ', number));
 }
 
-void	ft_launch_fct_int(char *number, t_list *t_struct, int len)
+int		ft_launch_fct_int(char *number, t_list *t_struct, int len)
 {
-	int prec;
+	int	prec;
 
 	prec = t_struct->prec;
 	if (t_struct->flag != '-' && t_struct->width > len)
-		ft_flag_before(t_struct, len);
+		if ((ft_flag_before(t_struct, len, number)) == -1)
+			return (-1);
 	if (t_struct->prec != 0 && t_struct->prec != -1)
-		ft_prec(t_struct, len);
+		if ((ft_prec(t_struct, len, number)) == -1)
+			return (-1);
 	if (t_struct->flag == '-')
-		ft_flag_after(t_struct, len, prec, number);
-	else
+		if ((ft_flag_after(t_struct, len, prec, number)) == -1)
+			return (-1);
+	if (t_struct->flag != '-')
 	{
 		if (t_struct->isneg == 1)
 			t_struct->res += write(1, "-", 1);
@@ -100,22 +124,5 @@ void	ft_launch_fct_int(char *number, t_list *t_struct, int len)
 			t_struct->res += write(1, number, len);
 	}
 	free(number);
-}
-
-char	*calcul_base(unsigned long int number, char *base, int len, int count)
-{
-	char *result;
-
-	if ((result = malloc(sizeof(char) * (count + 1))) == 0)
-		return (NULL);
-	result[count] = 0;
-	count--;
-	while (number > (unsigned long int)len - 1)
-	{
-		result[count] = base[number % len];
-		count--;
-		number = number / len;
-	}
-	result[count--] = base[number];
-	return (result);
+	return (1);
 }
