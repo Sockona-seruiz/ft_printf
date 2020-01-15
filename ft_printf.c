@@ -6,7 +6,7 @@
 /*   By: seruiz <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/02 11:06:38 by seruiz       #+#   ##    ##    #+#       */
-/*   Updated: 2020/01/02 14:30:16 by seruiz      ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/01/15 16:46:22 by seruiz      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,17 +32,17 @@ int		ft_launch_fct(char c, va_list *arg_list, t_list *t_struct)
 	else if (c == 'd' || c == 'i')
 		return (ft_print_base(va_arg(*arg_list, int), "0123456789", t_struct));
 	else if (c == 'u')
-		return (ft_print_base(va_arg(*arg_list, long int),
+		return (ft_print_base(va_arg(*arg_list, unsigned int),
 				"0123456789", t_struct));
 	else if (c == 'x')
-		return (ft_print_base(va_arg(*arg_list, long int),
+		return (ft_print_base(va_arg(*arg_list, unsigned int),
 				"0123456789abcdef", t_struct));
 	else if (c == 'p')
 		return (ft_print_base_p(va_arg(*arg_list, unsigned long int),
 				"0123456789abcdef", t_struct));
 	else if (c == 'X')
 	{
-		return (ft_print_base(va_arg(*arg_list, long int),
+		return (ft_print_base(va_arg(*arg_list, unsigned int),
 				"0123456789ABCDEF", t_struct));
 	}
 	return (-1);
